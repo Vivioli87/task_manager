@@ -17,6 +17,9 @@ def hello():
     return "Hello World... again!"
 
 
+# tells our app how & where to run the app
+# gets IP and PORT variables from env.py file
+# only use debug=True during development, change to False before submission
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
             port=int(os.environ.get("PORT")),
