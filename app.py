@@ -53,7 +53,6 @@ def register():
     return render_template("register.html")
 
 
-
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
@@ -86,16 +85,29 @@ def login():
 @app.route("/profile/<username>", methods=["GET", "POST"])
 def profile(username):
     # grab the sessions user's username from db
-    # ["username"] at end indicates we only want to return the username from the database i.e not password also.
+    # ["username"] at end indicates we only want to return the
+    # username from the database i.e not password also.
     username = mongo.db.users.find_one(
         {"username": session["user"]})["username"]
-    return render_template("profile.html", username=username)
+
+    if session["user"]:
+        return render_template("profile.html", username=username)
+
+    return redirect(url_for("login"))
+
+
+@app.route("/logout")
+def logout():
+    # remove user from session cookies
+    flash("You have been logged out")
+    session.pop("user")
+    return redirect(url_for("login"))
+
 
 # tells our app how & where to run the app
 # gets IP and PORT variables from env.py file
-# only use debug=True during development, change to False before submission
+# only use 'debug=True' during development, change to False before submission
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
             port=int(os.environ.get("PORT")),
             debug=True)
-         
