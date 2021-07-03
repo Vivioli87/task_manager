@@ -4,6 +4,7 @@ from flask import (
     redirect, request, session, url_for)
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
+from werkzeug.security import generate_password_hash, check_password_hash
 # to use environment variables need to import env package
 # env.py wont be pushed to github...
 # once app deployed to Heroku it wont find env.py and throw error
@@ -27,6 +28,12 @@ mongo = PyMongo(app)
 def get_tasks():
     tasks = mongo.db.tasks.find()
     return render_template("tasks.html", tasks=tasks)
+
+
+@app.route("/register", methods=["GET", "POST"])
+def register():
+    return render_template("register.html")
+
 
 
 # tells our app how & where to run the app
