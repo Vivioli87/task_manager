@@ -104,6 +104,10 @@ def logout():
     return redirect(url_for("login"))
 
 
+@app.route("/add_task")
+def add_task():
+    return render_template("add_task.html")
+
 # tells our app how & where to run the app
 # gets IP and PORT variables from env.py file
 # only use 'debug=True' during development, change to False before submission
