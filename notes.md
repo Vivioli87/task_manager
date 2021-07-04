@@ -43,3 +43,24 @@ mongo = PyMongo(app)
 
 ## / refers to default route
 @app.route("/")
+
+
+# For search lesson and creating indexes.
+
+The task name and the task description are suitable for what I want my users to be able
+to search by.
+Within the Index, we need to provide a list of fields that will be queried.
+This list will contain a tuple () for each field that we'd like to query, which is two
+for our purposes.
+The first tuple that we want to search within, is our 'task_name' field.
+The type of query we'll use is 'text', which is the most common Index type.
+
+example from mini project.
+
+
+in terminal:
+
+python3
+from app import mongo
+
+mongo.db.tasks.create_index([("task_name", "text"), ("task_description", "text")])
