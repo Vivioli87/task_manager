@@ -147,6 +147,13 @@ def edit_task(task_id):
     return render_template("edit_task.html", task=task, categories=categories)
 
 
+@app.route("/delete_task/<task_id>")
+def delete_task(task_id):
+    mongo.db.tasks.remove({"_id": ObjectId(task_id)})
+    flash("Task Successfully Deleted")
+    return redirect(url_for("get_tasks"))
+
+
 # tells our app how & where to run the app
 # gets IP and PORT variables from env.py file
 # only use 'debug=True' during development, change to False before submission
